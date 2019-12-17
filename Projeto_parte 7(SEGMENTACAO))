@@ -1,0 +1,54 @@
+img3= res2.copy()
+#img3 = meanshift.copy()
+img3c = img3.copy()
+gray = cv2.cvtColor(img3,cv2.COLOR_BGR2GRAY)
+ret, thresh = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+
+# remove ruídos
+kernel = np.ones((3,3),np.uint8)
+opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN,kernel, iterations = 0)
+
+# Fundo da imagem
+sure_bg = cv2.dilate(opening,kernel,iterations=3)
+
+# Objetos da imagem
+dist_transform = cv2.distanceTransform(opening,cv2.DIST_L2,5)
+ret, sure_fg = cv2.threshold(dist_transform,0.7*dist_transform.max(),255,0)
+
+# Encontrando regiões desconhecidas
+sure_fg = np.uint8(sure_fg)
+unknown = cv2.subtract(sure_bg,sure_fg)
+
+# Rotulando a imagem
+ret, markers = cv2.connectedComponents(sure_fg)
+
+# Marca os objetos
+markers = markers+1
+
+# Regiões desconhecidas serão 0
+markers[unknown==255] = 0
+
+markers = cv2.watershed(img3,markers)
+img3[markers == -1] = [255,0,0]
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 8))
+ax = axes.ravel()
+
+ax[0].imshow(opening, cmap='gray')
+ax[0].set_title('Imagem Binária')
+ax[0].set_axis_off()
+
+ax[1].imshow(markers, cmap='gray')
+ax[1].set_title('watershed')
+ax[1].set_axis_off()
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 8))
+ax = axes.ravel()
+
+ax[0].imshow(cv2.cvtColor(img3c, cv2.COLOR_BGR2RGB))
+ax[0].set_title('Original')
+ax[0].set_axis_off()
+
+ax[1].imshow(cv2.cvtColor(img3, cv2.COLOR_BGR2RGB))
+ax[1].set_title('watershed')
+ax[1].set_axis_off()
