@@ -38,9 +38,87 @@ drive.mount('/content/drive')
 
 # PRÉ - PROCESSAMENTO 
 
-O objetivo e utilizar o aprimoramento de imagem é para transformar a imagem mais adequada
+'''O objetivo e utilizar o aprimoramento de imagem é para transformar a imagem mais adequada
 a outros processamentos de imagens, como melhor visualização de características ou restaurar imagens que foram deterioradas. A finalidade da manipulação de contraste é melhorar a visualização de contraste geral da imagem, destacar as regiões de baixa intensidade, melhorando a leitura
-da imagem.  
+da imagem.  '''
+
+
+'''Equalização do Histograma (HE)
+Na equalização do histograma (HE) os valores de intensidade da imagem são redistribuídos para aperfeiçoar o contraste. HE remapeia os tons de cinza de uma imagem baseada na probabilidade de distribuição dos nos níveis de cinza dados
+
+Esse método é uma operação global, e não preserva a iluminação da imagem. HE é amplamente utilizado em processamento de imagens médicas, imagens de radar e outros'''
+
+
+print(img1.shape)
+
+#plt.figure(figsize=(7, 6), dpi= 80, facecolor='w', edgecolor='k')
+#plt.axis("off")
+#plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)) #Conversão necessária para protar a imagem, devido ao opencv usa o 
+                                                 #formato RGB, enquanto o matplotlib usa RGB
+
+imggray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+imggray2 = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY)
+imggray3 = cv2.cvtColor(img3, cv2.COLOR_BGR2GRAY)
+imggray4 = cv2.cvtColor(img4, cv2.COLOR_BGR2GRAY)
+imggray5 = cv2.cvtColor(img5, cv2.COLOR_BGR2GRAY)
+
+equ1 = cv2.equalizeHist(imggray1)
+equ2 = cv2.equalizeHist(imggray2)
+equ3 = cv2.equalizeHist(imggray3)
+equ4 = cv2.equalizeHist(imggray4)
+equ5 = cv2.equalizeHist(imggray5)
+
+
+fig, axes = plt.subplots(1, 5, figsize=(20, 20))
+ax = axes.ravel()
+#Original 1
+ax[0].imshow(imggray1, cmap='gray')
+ax[0].set_title('original 1')
+ax[0].set_axis_off()
+
+#Original 2
+ax[1].imshow(imggray2, cmap='gray')
+ax[1].set_title('original 2')
+ax[1].set_axis_off()
+
+#Original 3
+ax[2].imshow(imggray3, cmap='gray')
+ax[2].set_title('original 3')
+ax[2].set_axis_off()
+
+#Original 4
+ax[3].imshow(imggray4, cmap='gray')
+ax[3].set_title('original 4')
+ax[3].set_axis_off()
+
+#Original 5
+ax[4].imshow(imggray5, cmap='gray')
+ax[4].set_title('original 5')
+ax[4].set_axis_off()
+
+fig, axes = plt.subplots(1, 5, figsize=(20, 20))
+ax = axes.ravel()
+#Equalizada 1 
+ax[0].imshow(equ1, cmap='gray')
+ax[0].set_title('Equalizada 1')
+ax[0].set_axis_off()
+#Equalizada 2 
+ax[1].imshow(equ2, cmap='gray')
+ax[1].set_title('Equalizada 2')
+ax[1].set_axis_off()
+#Equalizada 3
+ax[2].imshow(equ3, cmap='gray')
+ax[2].set_title('Equalizada 3')
+ax[2].set_axis_off()
+#Equalizada 4
+ax[3].imshow(equ4, cmap='gray')
+ax[3].set_title('Equalizada 4')
+ax[3].set_axis_off()
+#Equalizada 5
+ax[4].imshow(equ5, cmap='gray')
+ax[4].set_title('Equalizada 5')
+ax[4].set_axis_off()
+
 
 
 
