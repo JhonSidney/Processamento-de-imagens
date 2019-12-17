@@ -1,0 +1,23 @@
+# SEGMENTAÇÃO
+
+#NA PARTE 5 IREMOS APLICAR A PARTE DA SEGMENTAÇÃO DAS IMAGENS APÓS TER REALIZADO O PRE-PROCESSAMENTO
+
+#1.MEANSHIFT
+clhe_cor =  cv2.cvtColor(clhe,cv2.COLOR_GRAY2BGR) # Colocando os 3 canais de cores para aplicar o meanshift
+
+
+img = cv2.imread('Processamento_de_Imagem/Mamografias/mdb017.bmp') #Lendo uma imagem
+
+meanshift = cv2.pyrMeanShiftFiltering(clhe_cor, sp=15, sr=20, maxLevel=1, termcrit=(cv2.TERM_CRITERIA_EPS+cv2.TERM_CRITERIA_MAX_ITER, 5, 1))
+fig, axes = plt.subplots(1, 2, figsize=(15, 8))
+ax = axes.ravel()
+
+ax[0].imshow(clhe, cmap='gray')
+ax[0].set_title('clhe_eq')
+ax[0].set_axis_off()
+
+ax[1].imshow(cv2.cvtColor(meanshift, cv2.COLOR_BGR2RGB))#convertendo para RGB antes de plotar
+ax[1].set_title('MeanShift')
+ax[1].set_axis_off()
+
+
