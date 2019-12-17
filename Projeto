@@ -36,5 +36,11 @@ img5 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb021.bmp')
 from google.colab import drive
 drive.mount('/content/drive')
 
+# PRÉ - PROCESSAMENTO 
+
+O objetivo e utilizar o aprimoramento de imagem é para transformar a imagem mais adequada
+a outros processamentos de imagens, como melhor visualização de características ou restaurar imagens que foram deterioradas. A finalidade da manipulação de contraste é melhorar a visualização de contraste geral da imagem, destacar as regiões de baixa intensidade, melhorando a leitura
+da imagem.  
+
 
 
