@@ -1,0 +1,138 @@
+'''DESCRITORES DE TEXTURA''
+
+#LBP
+
+def get_pixel(img, center, x, y):
+    new_value = 0
+    try:
+        if img[x][y] >= center:
+            new_value = 1
+    except:
+        pass
+    return new_value
+
+def lbp_calculated_pixel(img, x, y):
+    '''
+     64 | 128 |   1
+    ----------------
+     32 |   0 |   2
+    ----------------
+     16 |   8 |   4    
+    '''    
+    center = img[x][y]
+    val_ar = []
+    val_ar.append(get_pixel(img, center, x-1, y+1))     # top_right
+    val_ar.append(get_pixel(img, center, x, y+1))       # right
+    val_ar.append(get_pixel(img, center, x+1, y+1))     # bottom_right
+    val_ar.append(get_pixel(img, center, x+1, y))       # bottom
+    val_ar.append(get_pixel(img, center, x+1, y-1))     # bottom_left
+    val_ar.append(get_pixel(img, center, x, y-1))       # left
+    val_ar.append(get_pixel(img, center, x-1, y-1))     # top_left
+    val_ar.append(get_pixel(img, center, x-1, y))       # top
+    
+    power_val = [1, 2, 4, 8, 16, 32, 64, 128] # VALORAÇÃO
+    val = 0 
+    for i in range(len(val_ar)):
+        val += val_ar[i] * power_val[i]
+    return val     # quanto esse pixel "vale" e onde via entrar no histograma
+  
+############################################################
+
+height, width, channel = img1.shape
+img_gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+img_lbp = np.zeros((height, width,3), np.uint8)
+  
+for i in range(0, height):
+  for j in range(0, width):
+    img_lbp[i, j] = lbp_calculated_pixel(img_gray, i, j) ## CALCULA O LBP
+
+  hist_lbp = cv2.calcHist([img_lbp], [0], None, [256], [0, 256])  ## HISTOGRAMA
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 8))
+ax = axes.ravel()
+
+ax[0].imshow(img1, cmap='gray')
+ax[0].set_title('Original')
+ax[0].set_axis_off()
+
+ax[1].imshow(img_lbp, cmap='gray')
+ax[1].set_title('LBP')
+ax[1].set_axis_off()
+
+'''plt.hist(img_lbp.ravel(),256,[0,256]); 
+plt.show()'''
+
+
+
+
+
+
+
+
+
+
+
+
+##>>>>>>>LBP no Sobel
+
+
+height, width = sobely.shape
+#img_gray = cv2.cvtColor(clhe, cv2.COLOR_BGR2GRAY)
+img_lbp = np.zeros((height, width,3), np.uint8)
+  
+for i in range(0, height):
+  for j in range(0, width):
+    img_lbp[i, j] = lbp_calculated_pixel(sobely, i, j)
+
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 8))
+ax = axes.ravel()
+
+ax[0].imshow(sobely, cmap='gray')
+ax[0].set_title('Sobel em Y')
+ax[0].set_axis_off()
+
+ax[1].imshow(img_lbp, cmap='gray')
+ax[1].set_title('LBP')
+ax[1].set_axis_off()
+
+
+
+
+
+
+
+
+
+
+
+#>>>>>SALVANDO NO DRIVE OS CODIGOS (Salvando Equalização do histograma)
+
+for arquivo in bancoimagens:                             # pecorre o vetor de imagens do diretorio
+    
+    #print('>>>Caminho da imagem Encontrado !!')
+    
+
+    
+
+    diretorio= "Processamento_de_Imagem/Mamografias/%s"%(arquivo)    # diretorio da imagem atual
+    #print(diretorio)
+
+    %cd /content                                                     
+    img = cv2.imread(diretorio)                                      # Lê imagem atual
+
+    tgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)                   
+
+    equ1 = cv2.equalizeHist(tgray)                                   #Aplica a equalização do Histograma
+    
+    
+    nomedoarquivo = ('%s_equalizado.jpg' %(arquivo))
+    %cd '/content/drive/My Drive/Colab Notebooks/Processadas/Equalizacao'
+
+    cv2.imwrite(nomedoarquivo, equ1)                                       #Escreve a imagem PROCESSADA no drive
+    print('>>>foi Salvo com nome %s!!' %(nomedoarquivo))
+
+
+
+
+
