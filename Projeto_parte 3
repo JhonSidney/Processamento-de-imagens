@@ -1,0 +1,32 @@
+''' APLICANDO O CLAHE '''
+
+
+
+
+
+
+# convert image to LAB color model
+image_lab = cv2.cvtColor(img3, cv2.COLOR_BGR2LAB)
+
+# split the image into L, A, and B channels
+l_channel, a_channel, b_channel = cv2.split(image_lab)
+
+# apply CLAHE to lightness channel
+clahe = cv2.createCLAHE(clipLimit= 2, tileGridSize=(16, 16))
+cl = clahe.apply(l_channel)
+
+# merge the CLAHE enhanced L channel with the original A and B channel
+merged_channels = cv2.merge((cl, a_channel, b_channel))
+
+
+fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+ax = axes.ravel()
+
+ax[0].imshow(img3, cmap='gray') 
+ax[0].set_title('Original')
+ax[0].set_axis_off()
+
+
+ax[1].imshow(cl, cmap='gray') 
+ax[1].set_title('CLAHE')
+ax[1].set_axis_off()
