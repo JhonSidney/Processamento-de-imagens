@@ -1,0 +1,30 @@
+'''Sobel
+É um dos filtros mais populares passa - alta
+
+O filtro Sobel (ou operador sobel) auxilia na detecção de bordas e transição de imagens. O operador sobel utiliza dois kernels, um para modificação horizontal e outra para modificação vertical. Seus kernels não possuem foco no pixel atual, mas nos pixels vizinhos.
+
+Ele coloca mais em destaque as alterações de dinâmicas'''
+
+imggray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
+
+sobelx = cv2.Sobel(imggray,cv2.CV_64F,1,0,ksize=5)
+sobely = cv2.Sobel(imggray,cv2.CV_64F,0,1,ksize=5)
+sobelxy = cv2.cv2.bitwise_and(sobelx,sobely) #APLICANDO O AND
+
+#kerne
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+ax = axes.ravel()
+
+ax[0].imshow(sobelx, cmap='gray') 
+ax[0].set_title('Sobel x')
+ax[0].set_axis_off()
+
+ax[1].imshow(sobely, cmap='gray') 
+ax[1].set_title('Sobel y')
+ax[1].set_axis_off()
+
+ax[2].imshow(sobelxy, cmap='gray') 
+ax[2].set_title('uniao Sobel x e Sobel y')
+ax[2].set_axis_off()
+
+
