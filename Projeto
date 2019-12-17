@@ -1,0 +1,40 @@
+''' Sobre esse projeto'''
+'''Aplicando o conhecimento de processamento de imagens.'''
+'''Utilizando a monografia de Thays Ferreira da Silva(Análise de Descritores de Imagem e
+Classificadores APlicados para Detecção de Lesõoes em imagens de Mamografia Digital ,
+2017 Recife) como base de estudo para realizar operações aprendidas em aula.'''
+
+
+
+
+#>>>>>>> 1. Primeira linha
+!git clone https://github.com/DMariz/Processamento_de_Imagem.git
+
+
+#>>>>>>>2. Segunda Linha do google Colab 
+
+import cv2
+import numpy as np
+import os
+
+%matplotlib inline
+from matplotlib import pyplot as plt
+from google.colab.patches import cv2_imshow  #usar o comando imshow diretamente no colab
+
+####### LENDO IMAGENS
+
+img1 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb001.bmp') 
+img2 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb005.bmp')
+img3 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb010.bmp')
+img4 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb017.bmp')
+img5 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb021.bmp')
+
+
+
+#>>>>>>>>3. Tentando montar ou Salvar arquivos no google drive 
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+
+
