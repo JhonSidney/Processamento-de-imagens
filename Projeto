@@ -29,8 +29,6 @@ img3 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb010.bmp')
 img4 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb017.bmp')
 img5 = cv2.imread('Processamento_de_Imagem/Mamografias/mdb021.bmp')
 
-
-
 #>>>>>>>>3. Tentando montar ou Salvar arquivos no google drive 
 
 from google.colab import drive
